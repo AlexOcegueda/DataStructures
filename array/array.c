@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*
- * push, pop, resize, insert, remove
+ * insert, remove
  */
 struct Array {
     int *numbers; 
@@ -30,9 +30,35 @@ void array_free(struct Array *arr) {
     arr->numbers = NULL;
 }
 
+struct Array resize(struct Array *arr) {
+    struct Array new_array = array_init(arr->capacity * 2);
+    
+    new_array.size = arr->size;
+
+    for (int i = 0; i < arr->size; i++) {
+        array_set(&new_array, i, arr->numbers[i]);
+    };
+    array_free(arr);
+    return new_array;
+};
+
 // Pushes num to end of array
 void push(struct Array *arr, int n) {
-    array_set(arr, sizeof(arr->numbers)/sizeof(arr->numbers[0]), n);
+    if (arr->size == arr->capacity) {
+        *arr = resize(arr);
+    };
+    array_set(arr, arr->size, n);
+    arr->size++;
+};
+
+int pop(struct Array *arr) {
+    int x = array_get(arr, arr->size - 1);
+    arr->size--;
+    return x;
+};
+
+void insert(struct Array *arr) {
+    
 };
 
 int main(void) {
@@ -40,13 +66,23 @@ int main(void) {
     struct Array array = array_init(5);
     struct Array *p = &array;
 
-    //array_set(p, 0, 100);
-    //printf("%d\n", array_get(p, 0));
     push(p, 67);
-    printf("%d\n", array_get(p, sizeof(p->numbers)/sizeof(p->numbers[0])));
-    
-    
+    push(p, 42);
+    push(p, 99);
+
+    printf("size: %d\n", p->size);
+    printf("capacity: %d\n", p->capacity);
+
+    printf("%d\n", array_get(p, 0));
+    printf("%d\n", array_get(p, 1));
+    printf("%d\n", array_get(p, 2));
+
+    int popped = pop(p);
+
+    printf("popped: %d\n", popped);
+    printf("size after pop: %d\n", p->size);
 
     array_free(p);
+
     return 0;
 };
