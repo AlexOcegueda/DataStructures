@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*
- * insert, remove
- */
+
 struct Array {
     int *numbers; 
     int size;
@@ -18,10 +16,14 @@ struct Array array_init(int capacity) {
 };
 
 void array_set(struct Array *arr, int position, int value) {
-    arr->numbers[position] = value;  
+   arr->numbers[position] = value;  
 };
 
 int array_get(struct Array *arr, int position) { 
+    if (position < 0 || position >= arr->size) {
+        printf("out of bounds");
+        return -1;
+    };
     return arr->numbers[position];
 };
 
@@ -71,8 +73,15 @@ void insert(struct Array *arr, int position, int value) {
     arr->size++;
 };
 
-void remove(struct Array *arr, int position) {
-    
+void array_remove(struct Array *arr, int position) {
+    if (position < 0 || position >= arr->size) {
+        printf("out of bounds");
+        return;
+    };
+    for (int i = position; i < arr->size - 1; i++) {
+        arr->numbers[i] = arr->numbers[i + 1];
+    }   
+    arr->size--;
 };
 
 void print_array(struct Array *arr) { 
@@ -104,7 +113,7 @@ int main(void) {
     //printf("size after pop: %d\n", p->size);
 
     insert(p, 1, 33);
-    
+    array_remove(p, 1);
     print_array(p);
     array_free(p);
 
