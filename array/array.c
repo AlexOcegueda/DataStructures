@@ -57,8 +57,28 @@ int pop(struct Array *arr) {
     return x;
 };
 
-void insert(struct Array *arr) {
+void insert(struct Array *arr, int position, int value) {
     
+    if (arr->size == arr->capacity) {
+       *arr = resize(arr);
+    };
+    
+    for (int i = arr->size; i > position; i--) {
+        arr->numbers[i] = arr->numbers[i-1];
+    };
+    
+    array_set(arr, position, value);
+    arr->size++;
+};
+
+void remove(struct Array *arr, int position) {
+    
+};
+
+void print_array(struct Array *arr) { 
+    for (int i = 0; i < arr->size; i++) { 
+        printf("%d\n", arr->numbers[i]);
+    };
 };
 
 int main(void) {
@@ -69,19 +89,23 @@ int main(void) {
     push(p, 67);
     push(p, 42);
     push(p, 99);
+    push(p, 102);
 
     printf("size: %d\n", p->size);
     printf("capacity: %d\n", p->capacity);
+    print_array(p);
+    //printf("%d\n", array_get(p, 0));
+    //printf("%d\n", array_get(p, 1));
+    //printf("%d\n", array_get(p, 2));
 
-    printf("%d\n", array_get(p, 0));
-    printf("%d\n", array_get(p, 1));
-    printf("%d\n", array_get(p, 2));
+    //int popped = pop(p);
 
-    int popped = pop(p);
+    //printf("popped: %d\n", popped);
+    //printf("size after pop: %d\n", p->size);
 
-    printf("popped: %d\n", popped);
-    printf("size after pop: %d\n", p->size);
-
+    insert(p, 1, 33);
+    
+    print_array(p);
     array_free(p);
 
     return 0;
