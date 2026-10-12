@@ -29,22 +29,29 @@ int node_length(struct Node *node) {
     return length;
 };
 
-void stack_push(struct Node *node, int value) {
-  	while(node->next) {
-      	node = node->next;
-  	};
-  	node->next = node_init(value);
+struct Node *stack_push(struct Node *node, int value) {
+    struct Node *pNode = node_init(value);
+    pNode->next = node;
+    return pNode;
+
 };
 
-int stack_pop(struct Node *node) {
-    int length = node_length(node);
-    for(int i=0; i < length - 1; i++) {
-        node = node->next; 
+int stack_peek(struct Node *node) {
+    if(node == NULL) {
+        return -1;
     };
+
+    return node->value;
+};
+
+struct Node *stack_pop(struct Node *node) {
+    if(node == NULL) { 
+        return NULL;
+    };
+    
     struct Node *nxt = node->next;
-    int popped = nxt->value;
-    free(nxt);
-    return popped;
+    free(node);
+    return nxt;
 };
 
 void traverse(struct Node *node) { 
@@ -55,9 +62,16 @@ void traverse(struct Node *node) {
 };
 
 int main() {
-	struct Node *node = node_init(1); 
-	stack_push(node, 2);
-	stack_pop(node);
-  traverse(node);
-	return 0;
+	  struct Node *node = node_init(1); 
+	  node = stack_push(node, 200);
+    //traverse(node);
+	  printf("%d\n", stack_peek(node));
+    
+
+    node = stack_pop(node);
+    //node = stack_pop(node);
+    //node = stack_pop(node);
+    //node = stack_pop(node);
+    traverse(node);
+	  return 0;
 };
