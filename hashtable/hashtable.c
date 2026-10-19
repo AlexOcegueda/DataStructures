@@ -25,10 +25,14 @@ void hash_table_insert(struct HashTable *ht, char key, int value) {
 		ht->*table->entry->next = NULL;
 };
 
+int hash_table_get(struct HashTable *ht, int position) {
+		return ht->table[position];
+};
+
 int main() {
 		struct HashTable *ht = hash_table_init(10);
 		hash_table_insert(ht, 'a', 1);
-		
+		printf("%d\n", hash_table_get(0));
 		return 0;
 };
 
