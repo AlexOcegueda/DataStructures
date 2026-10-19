@@ -19,9 +19,10 @@ struct HashTable *hash_table_init(int capacity) {
 };
 
 void hash_table_insert(struct HashTable *ht, char key, int value) {
-		ht->table->key = key;
-		ht->table->value = value;
-		ht->table->entry->next = NULL;
+		struct Entry *entry = malloc(sizeof(struct Entry));
+		ht->*table->key = key;
+		ht->*table->value = value;
+		ht->*table->entry->next = NULL;
 };
 
 int main() {
