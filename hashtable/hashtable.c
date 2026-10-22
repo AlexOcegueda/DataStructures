@@ -32,6 +32,10 @@ char *hash_table_get(struct HashTable *ht, int position) {
   	return ht->table[position]->key;
 };
 
+void hash_table_remove(struct HashTable *ht, int key) {
+		
+};
+
 int main() {
 		struct HashTable *ht = hash_table_init(10);
 		hash_table_insert(ht, "apple", 0);
@@ -39,6 +43,4 @@ int main() {
 		return 0;
 };
 
-//hash_table_get()
-//hash_table_remove()
 //hash_table_free()
